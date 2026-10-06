@@ -22,6 +22,11 @@ jobs:
           cat .build-src/part1.b64 .build-src/part2.b64 .build-src/part3.b64 .build-src/part4.b64 .build-src/part5.b64 | tr -d '\n\r' | base64 --decode > BlackHoleWidget-source.zip
           echo "7de73e693d4fcf0158664dcec7e9b91ab250b504  BlackHoleWidget-source.zip" | sha1sum -c -
           unzip -q BlackHoleWidget-source.zip
+          cp .launcher-v02/MainActivity.java BlackHoleWidget/app/src/main/java/com/ddarkness/blackholewidget/MainActivity.java
+          cp .launcher-v02/AndroidManifest.xml BlackHoleWidget/app/src/main/AndroidManifest.xml
+          cp .launcher-v02/README.md BlackHoleWidget/README.md
+          sed -i "s/versionCode 1/versionCode 2/" BlackHoleWidget/app/build.gradle
+          sed -i "s/versionName '0.1.0'/versionName '0.2.0'/" BlackHoleWidget/app/build.gradle
 
       - name: Set up Java 17
         uses: actions/setup-java@v5
@@ -52,6 +57,6 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: BlackHoleWidget-debug
+          name: BlackHoleLauncher-v0.2-debug
           path: BlackHoleWidget/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
